@@ -1,0 +1,35 @@
+﻿@model List<ImageUploader.Models.Person>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<br />
+@foreach (var item in Model)
+{
+    <div id="personList" class="container">
+        <br />
+        <p><b>Name: </b>@item.Name</p>
+        <p><b>Surname: </b>@item.Surname</p>
+        <a class="btn btn-warning" href="@Url.Action("Edit", "File", new { itemID = @item.RecordID })">
+            <span class="glyphicon glyphicon-edit"></span>  Edit
+        </a>
+        <a class="btn btn-danger" href="@Url.Action("Delete", "File", new { itemID = @item.RecordID })">
+            <span class="glyphicon glyphicon-remove"></span>  Delete
+        </a>
+        
+        @if (item.ImageData != null) 
+        { 
+            <br />
+            <img src="data:image/png;base64, @Convert.ToBase64String(item.ImageData, 0, item.ImageData.Length)" width="220" height="350" class="img-rounded" />
+        }
+            else
+            { 
+                <br />
+                <img src="@Url.Content("~/Content/files/"+item.ImageName)" class="img-rounded " width="220" height="350">
+            }        
+    </div>
+}
+

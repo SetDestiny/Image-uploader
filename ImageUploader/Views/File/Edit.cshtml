@@ -1,0 +1,70 @@
+﻿@model ImageUploader.Models.Person
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginForm("Edit", "File", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    
+    @Html.HiddenFor(m => m.ImageData)
+    @Html.HiddenFor(m => m.ImageSize)
+    @Html.HiddenFor(m => m.ImageName)
+    @Html.HiddenFor(m => m.RecordID)
+    
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+        <div class="col-md-3">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        </div>
+        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "col-md-3 control-label", style = "text-align:left;" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Surname, new { @class = "col-md-2 control-label" })
+        <div class="col-md-3">
+            @Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
+        </div>
+        @Html.ValidationMessageFor(m => m.Surname, "", new { @class = "col-md-3 control-label", style = "text-align:left;" })
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Photo", new { @class = "col-md-2 control-label" })
+        <div class="col-md-3">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <span class="btn btn-primary btn-file">
+                        Browse&hellip; <input type="file" name="file" id="file" multiple>
+                    </span>
+                </span>
+                <input type="text" class="form-control" readonly>
+            </div>
+        </div>
+        @Html.ValidationMessage("FileError", new { @class = "col-md-3 control-label", style = "text-align:left;" })
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-3">
+            @if (Model.ImageData != null)
+            {
+                <br />
+                <img src="data:image/png;base64, @Convert.ToBase64String(Model.ImageData, 0, Model.ImageData.Length)" width="220" height="350" class="img-rounded" />
+            }
+            else
+            {
+                <br />
+                <img src="@Url.Content("~/Content/files/" + Model.ImageName)" class="img-rounded " width="220" height="350">
+            }
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-3">
+            <button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-save"></span> Save</button>
+        </div>
+    </div>
+}
+
